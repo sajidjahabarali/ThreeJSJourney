@@ -6,47 +6,40 @@ const canvas = document.querySelector("canvas.webgl");
 // Scene
 const scene = new THREE.Scene();
 
+//group
+const group = new THREE.Group();
+group.scale.y = 2;
+group.rotation.y = 2;
+scene.add(group);
+
+const axesHelper = new THREE.AxesHelper(2);
+scene.add(axesHelper);
+
 /**
  * Objects
  */
-const group = new THREE.Group();
-scene.add(group);
+const geometry = new THREE.BoxGeometry(1, 1, 1);
+const material = new THREE.MeshBasicMaterial({ color: 0xff0000 });
+const mesh = new THREE.Mesh(geometry, material);
 
-const cube1 = new THREE.Mesh(
-  new THREE.BoxGeometry(1, 1, 1),
-  new THREE.MeshBasicMaterial({ color: 0xff0000 })
-);
+mesh.position.x = -0.5;
+mesh.position.y = -1.2;
+mesh.position.z = 0.2;
 
-const cube2 = new THREE.Mesh(
-  new THREE.BoxGeometry(1, 1, 1),
-  new THREE.MeshBasicMaterial({ color: 0x00ff00 })
-);
+mesh.rotation.z = Math.PI * 0.25;
+mesh.rotation.y = Math.PI * 0.25;
 
-const cube3 = new THREE.Mesh(
-  new THREE.BoxGeometry(1, 1, 1),
-  new THREE.MeshBasicMaterial({ color: 0x0000ff })
-);
+mesh.position.set(0, 1, 0);
 
-cube2.position.x = 2;
-cube3.position.y = 2;
+const mesh2 = new THREE.Mesh(geometry, material);
+mesh2.scale.y = 0.5;
 
-group.add(cube1, cube2, cube3);
+console.log(mesh.position.length());
 
-group.rotateX(1);
-// group.rotateY(1);
+mesh.scale.set(2, 0.2, 3);
 
-// const geometry = new THREE.BoxGeometry(1, 1, 1);
-// const material = new THREE.MeshBasicMaterial({ color: 0xff0000 });
-// const mesh = new THREE.Mesh(geometry, material);
-// mesh.scale.set(3, 1, 1);
-// mesh.rotation.reorder("YXZ");
-// mesh.rotation.y = 2.7;
-// mesh.rotation.x = 1.6;
-// mesh.rotation.z = 1.5;
-// scene.add(mesh);
-
-const axesHelper = new THREE.AxesHelper(3);
-scene.add(axesHelper);
+group.add(mesh);
+group.add(mesh2);
 
 /**
  * Sizes
@@ -61,8 +54,9 @@ const sizes = {
  */
 const camera = new THREE.PerspectiveCamera(75, sizes.width / sizes.height);
 camera.position.z = 3;
-camera.position.y = 1;
+camera.lookAt(mesh.position);
 scene.add(camera);
+console.log(mesh.position.distanceTo(camera.position));
 
 /**
  * Renderer
