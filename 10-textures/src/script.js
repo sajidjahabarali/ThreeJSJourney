@@ -8,16 +8,21 @@ const loadingManager = new THREE.LoadingManager();
 loadingManager.onStart = () => console.log('onStart');
 loadingManager.onProgress = () => console.log('onProgress');
 loadingManager.onLoad = () => console.log('onLoad');
-
 loadingManager.onError = () => console.log('onError');
 
 const textureLoader = new THREE.TextureLoader(loadingManager);
-const colorTexture = textureLoader.load(
+
+let colorTexture;
+colorTexture = textureLoader.load(
   './textures/door/color.jpg'
   //   () => console.log('load'),
   //   () => console.log('progress'),
   //   () => console.log('error')
 );
+
+// colorTexture = textureLoader.load('./textures/checkerboard-1024x1024.png');
+// colorTexture = textureLoader.load('./textures/checkerboard-8x8.png');
+colorTexture = textureLoader.load('./textures/minecraft.png');
 const alphaTexture = textureLoader.load('./textures/door/alpha.jpg');
 const ACTexture = textureLoader.load('./textures/door/ambientOcclusion.jpg');
 const heightTexture = textureLoader.load('./textures/door/height.jpg');
@@ -25,6 +30,26 @@ const metalTexture = textureLoader.load('./textures/door/metalness.jpg');
 const normalTexture = textureLoader.load('./textures/door/normal.jpg');
 const roughnessTexture = textureLoader.load('./textures/door/roughness.jpg');
 colorTexture.colorSpace = THREE.SRGBColorSpace;
+
+// colorTexture.repeat.x = 2;
+// colorTexture.repeat.y = 3;
+// // colorTexture.wrapS = THREE.RepeatWrapping;
+// // colorTexture.wrapT = THREE.RepeatWrapping;
+// colorTexture.wrapS = THREE.MirroredRepeatWrapping;
+// colorTexture.wrapT = THREE.MirroredRepeatWrapping;
+
+// colorTexture.offset.x = 0.5;
+// colorTexture.offset.y = 0.5;
+
+// colorTexture.center.x = 0.5;
+// colorTexture.center.y = 0.5;
+
+// colorTexture.rotation = Math.PI * 0.25;
+
+colorTexture.generateMipmaps = false;
+
+// colorTexture.minFilter = THREE.NearestFilter;
+colorTexture.magFilter = THREE.NearestFilter;
 
 // const image = new Image();
 // const texture = new THREE.Texture(image);
